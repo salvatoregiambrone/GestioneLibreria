@@ -11,7 +11,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome", nullable = false, length = 255)
+    @Column(name = "nome", nullable = false, length = 255, unique = true)
     private String nome;
 
     @ManyToMany(mappedBy = "categorie")

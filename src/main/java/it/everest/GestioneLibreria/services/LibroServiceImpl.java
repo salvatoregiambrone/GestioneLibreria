@@ -71,8 +71,8 @@ public class LibroServiceImpl implements LibroService {
 	    Libro esistente = libroRepository.findById(id)
 	        .orElseThrow(() -> new RuntimeException("Libro non trovato con id: " + id));
 
-	    esistente.setTitolo(libro.getTitolo());
-	    esistente.setAutore(libro.getAutore());
+	    esistente.setTitolo(libro.getTitolo()); // Potremmo lanciare un'eccezione se il titolo è nullo
+	    esistente.setAutore(libro.getAutore()); // Potremmo lanciare un'eccezione se l'autore è nullo
 	    esistente.setIsbn(libro.getIsbn());
 	    esistente.setAnnoPubblicazione(libro.getAnnoPubblicazione());
 	    esistente.setGenere(libro.getGenere());
