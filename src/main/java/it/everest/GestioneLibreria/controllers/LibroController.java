@@ -1,6 +1,9 @@
 package it.everest.GestioneLibreria.controllers;
 
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import it.everest.GestioneLibreria.entities.Libro;
 import it.everest.GestioneLibreria.services.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +13,20 @@ import org.springframework.data.domain.*;
 
 @RestController
 @RequestMapping("/api/libri")
+@Tag(name = "Libri", description = "Operazioni relative alla gestione dei libri")
 public class LibroController {
 
     @Autowired
     private LibroService libroService;
 
+    @Operation(summary = "Ottieni tutti i libri", description = "Restituisce una lista di tutti i libri registrati.")
     @GetMapping
     public List<Libro> all() {
         return libroService.all();
     }
-    
+
+    @Operation(summary = "Restituisce una pagina di libri ordinati",
+            description = "Permette di specificare pagina, dimensione, campo e direzione di ordinamento.")
     @GetMapping("/paginate")
     public Page<Libro> paginate(
         @RequestParam(defaultValue = "0") int page,
@@ -52,11 +59,15 @@ public class LibroController {
         return libroService.getByAutore(autore);
     }
 
+    @Operation(summary = "Crea un nuovo libro",
+            description = "Crea un libro e associa eventuali categorie esistenti o nuove. Richiede un oggetto JSON di tipo Libro.")
     @PostMapping
     public Libro create(@RequestBody Libro libro) {
         return libroService.create(libro);
     }
 
+    @Operation(summary = "Aggiorna un libro esistente",
+            description = "Aggiorna i dati di un libro identificato da ID e sostituisce le categorie associate.")
     @PutMapping("/{id}")
     public Libro update(@PathVariable Long id, @RequestBody Libro libro) {
         return libroService.update(id, libro);
